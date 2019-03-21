@@ -1,0 +1,83 @@
+  
+.twitter {
+  background-image: url(http://csci571.com/hw/hw8/Images/Twitter.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  border:  1 solid black;
+}
+agm-map {
+  width:100%;
+  height: 400px;
+}
+.map{
+  padding: 0 !important;
+  margin: 0 !important;
+}
+.linkBtn {
+  background: none;
+  cursor:pointer;
+  border: none;
+}
+
+.mya{
+  cursor: pointer !important;
+  color:rgb(86,166,252);
+}
+.mya a:hover {
+  color:black;
+}
+.table.no-border tr td, .table.no-border tr th {
+  border-width: 0;
+}
+
+.progress-wrapper {
+  position: relative;
+  /* margin: 0 auto; */
+  /* font-size: 40px; */
+}
+
+.current {
+  position: absolute;
+  left: 0.6em;
+}
+
+.mytable > tbody > tr > td, .mytable > tbody > tr > th  {
+  vertical-align: middle;
+}
+
+.mybtn{
+  border: 1px solid rgb(236,236,236);
+}
+.star{
+  color: rgb(247,211,67);
+}
+.myimage{
+  border: 0 !important;
+}
+.upComing {
+  border:1px solid rgb(236,236,236);
+}
+#small {
+  display: none;
+}
+@media (max-width: 500px)  {
+  #large {
+    display: none;;
+  }
+  #small{
+    display: block;
+  }
+}
+@media (max-width: 400px)  {
+  #large {
+    display: none;;
+  }
+ 
+  #small ul li a  {
+    padding-left:0.2rem !important;
+    padding-right: 0.2rem !important;
+  }
+  #small{
+    display: block;
+  }
+}

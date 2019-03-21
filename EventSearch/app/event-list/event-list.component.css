@@ -1,0 +1,46 @@
+table {
+    width: 100%;
+  }
+.linkBtn {
+  background: none;
+  cursor:pointer;
+  border: none;
+}
+
+.mytable{
+  font-size: 0.8rem !important;
+  /* display: table-cell; Width: 100%; */
+
+}
+.mytable > tbody > tr > td, .mytable > tbody > tr > th  {
+  vertical-align: middle;
+}
+
+ /* .mytable { table-layout: fixed; }
+ .mytable th, table td { overflow: hidden; } */
+
+ /* tr.something {
+  td {
+    select {
+      width: 90px;
+    }
+  }
+} */
+tr.somethingontrlevel td.something {
+  width: 90px;
+}
+
+
+.table tr.active td {
+  background: rgb(249,224,167) !important;
+}
+.table tr.active th {
+  background: rgb(249,224,167) !important;
+}
+
+.mybtn{
+  border: 1px solid rgb(236,236,236);
+}
+.star{
+  color: rgb(247,211,67);
+}

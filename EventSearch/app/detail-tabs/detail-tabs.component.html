@@ -1,0 +1,279 @@
+<div class="container" >
+    <div class="row justify-content-md-center mt-3">
+        <div class="col-auto">
+          <p class="font-weight-bold">{{currentEvent.eventName}}</p>
+        </div>
+    </div>
+  <div class="form-group row ">
+    <div class="col">
+        <button *ngIf="!isFavDisplay" class="btn btn-outline-secondary " (click)="hide()" > &lt; List</button>
+    </div>
+    <div class="col " >
+        <div class="btn-group float-right" role="group " >
+      <a class="twitter-share-button btn btn-lg twitter mr-1 " href="https://twitter.com/intent/tweet?text={{twitterText}}"></a>
+      <button  class="btn btn-light btn-sm mybtn" (click)="putToFav()" ><i  *ngIf="!isHasStar()"class="material-icons ">  
+          star_border
+          </i><i *ngIf="isHasStar()" class="material-icons star">star</i>
+        </button> 
+        </div>
+  </div>         
+</div>
+<div id="large"class="row" >
+   <div class="col-sm-12">
+<ul class="nav nav-tabs justify-content-end myul" >
+  <li class="nav-item  mya" >
+    <a class="nav-link " data-toggle="tab"  (click)="setShowTab(0)"  >Event</a>
+  </li>
+  <li class="nav-item mya">
+    <a class="nav-link" data-toggle="tab" (click)="setShowTab(1)"  >Artist/Teams</a>
+  </li>
+  <li class="nav-item mya">
+    <a class="nav-link" data-toggle="tab" (click)="setShowTab(2)" >Venue</a>
+  </li>
+  <li class="nav-item mya">
+    <a class="nav-link "data-toggle="tab"  (click)="setShowTab(3)" > UpcomingEvents</a>
+  </li>
+</ul>
+</div>
+</div>
+<div id="small" class="row" >
+  <div class="col-sm-12">
+<ul class="nav nav-tabs justify-content-end myul" >
+ <li class="nav-item  mya" >
+   <a class="nav-link " data-toggle="tab"  (click)="setShowTab(0)"  >Event</a>
+ </li>
+ <li class="nav-item mya">
+   <a class="nav-link" data-toggle="tab" (click)="setShowTab(1)"  >Artist</a>
+ </li>
+ <li class="nav-item mya">
+   <a class="nav-link" data-toggle="tab" (click)="setShowTab(2)" >Venue</a>
+ </li>
+ <li class="nav-item mya">
+   <a class="nav-link "data-toggle="tab"  (click)="setShowTab(3)" > Upcoming</a>
+ </li>
+</ul>
+</div>
+</div>
+    <div id="1" class="no-border " *ngIf="tabs[0]">
+      <div class="table-responsive">
+            <table class="table table-striped mt-2 no-border">
+                <thead >
+                    <tr style="border:0">
+                        <th scope="col"><div style="width:100px;">Artist/Teams</div></th>
+                        <th scope="col"><div style="width:500px">{{eventDetail.artist}}</div></th>
+                      </tr>
+                </thead>
+                <tbody>
+                    
+                  <tr>
+                    <th scope="row">Venue</th>
+                    <td>{{eventDetail.venue}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Time</th>
+                    <td>{{eventDetail.time | date: 'MMM dd, yyyy HH:mm:ss'}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Category</th>
+                    <td>{{eventDetail.category}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Price Range</th>
+                    <td><i *ngIf="eventDetail.lowPrice && eventDetail.highPrice">{{eventDetail.lowPrice |currency:'USD':'code': 1.0-2}}~{{eventDetail.highPrice |currency:'USD':'code': 1.0-2}}</i></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Ticket Status</th>
+                    <td>{{eventDetail.ticketStatus}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Buy Ticket At</th>
+                    <td><a href="{{eventDetail.buyTicketAt}}" target="_blank">TicketMaster</a></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Seat Map </th>
+                    <td><Button class="linkBtn" data-toggle="modal"  data-target="#map"  value = "{{eventDetail.seatMap}}">View Seat Map Here</Button></td>
+                  </tr>
+                </tbody>
+              </table>
+
+<div class="modal fade" id="map" tabindex="-1" role="dialog" aria-labelledby="map" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">View Seat Map</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <div class="container-fluid">
+            <div class="row">
+                <a href="{{eventDetail.seatMap}}" target="_blank"><img class="inline-block img-fluid" src="{{eventDetail.seatMap}}"> </a>
+         </div>
+         </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary " data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+      </div>
+    </div>
+    <div id="2" class =" mt-1" *ngIf="tabs[1]">    
+          <table class="table table-striped  pb-3 no-border mytable" *ngFor="let artist of artists">
+            <thead style="border:0;text-align: center"> 
+            <tr>
+                  <th colspan="2">{{artist.name}}</th>
+                </tr>
+                </thead>
+              <tbody>
+                
+                  <tr>
+                      <th scope="col">Name</th>
+                      <th scope="col">{{artist.name}}</th>
+                    </tr>
+                <tr>
+                  <th scope="row">Followers</th>
+                  <td>{{artist.followers | numberSplit}}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Popularity</th>
+                  <td>
+                      <div class="progress-wrapper">
+                        <div class="current  mt-2" >{{artist.popularity}}</div>
+                        <round-progress [color]="'#67E121'" [current]="artist.popularity" [radius]="20" [stroke]= "2"[max]="100"></round-progress>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">Check At</th>
+                  <td><a href="{{artist.checkAt}}" target="_blank">Spotify</a></td>
+                </tr>
+              </tbody>
+            </table>
+            <div *ngFor ="let phos of photo">
+                <div class="row justify-content-md-center">
+                    <div class="col-auto" style="text-align: center">
+                      <p class="font-weight-bold">{{phos.name}}</p>
+                    </div>
+                </div>
+                <div class="d-flex align-content-start flex-wrap" > 
+                    <div class="card col-sm-4 myimage" style="width: 18rem;" *ngFor = "let pho of phos.photo">
+                        <a href="{{pho.link}}" target="new">
+                          <img class="img-thumbnail" src="{{pho.link}}">
+                        </a>
+                      </div>
+                       
+                </div>
+            </div>
+            <div class="container mt-5 pt-5" *ngIf="artist == null && photo?.length == 0" >
+              <div class=" row alert alert-warning"  role="alert">
+                No records.
+              </div>
+          </div>
+       
+    </div>
+  <div id = "3" class=" mt-1" *ngIf="tabs[2]">
+       <div class="row">
+        <div class="col">
+          <table class="table table-striped">
+              <thead>
+                <tr style="text-align: center;">
+                  <td colspan="2">
+                  {{venue.venueName}}
+                  </td>
+                </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      <th scope="col">Address</th>
+                      <th scope="col">{{venue.address}}</th>
+                    </tr>
+                <tr>
+                  <th scope="row">City</th>
+                  <td>{{venue.city}}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Phone Number</th>
+                  <td>{{venue.phoneNumber}}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Open Hours</th>
+                  <td>{{venue.openHours}}</td>
+                </tr>
+                <tr>
+                  <th scope="row">General Rule</th>
+                  <td>{{venue.generalRule}}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Child Rule</th>
+                  <td>{{venue.childRule}}</td>
+                </tr>
+                <tr  >
+                    <th class="map"scope="row" colspan="2" rowspan=" 4"><agm-map [latitude]="venue?.lat | parseFloat" [longitude]="venue?.lng | parseFloat" [zoom]="12">
+                      <agm-marker [latitude]="venue?.lat | parseFloat" [longitude]="venue?.lng | parseFloat"></agm-marker>
+                    </agm-map></th>
+                  </tr>
+              </tbody>
+          </table>
+         </div>
+      </div> 
+    </div>
+    <div id ="4" class = " mt-1" *ngIf="tabs[3]">
+      <div>
+          <div class="form-group row mt-5" *ngIf = "upComingEvent">
+            <div class="col-sm-4">
+                <select class="custom-select" id="cate" name="cate"  [formControl]="cate">
+                  <option ngValue ="Default">Default</option>
+                  <option ngValue ="Name">Event Name</option>
+                  <option ngValue="Time">Time</option>
+                  <option ngValue="Artist">Artist</option>
+                  <option ngValue="Type">Type</option>
+                </select>
+            </div>
+            <div class="col-sm-4" *ngIf="upComingEvent != null && upComingEvent.length != 0">
+                <select class="custom-select" id="order" name="order"  [formControl]='order'>
+                  <option  value="Ascending" >Ascending</option>
+                  <option value="Descending">Descending</option>
+                </select>
+            </div>
+          </div>
+         <div [@fadeIn]="numsToShow" >          
+        <div *ngFor="let i = index let event of upComingEvent | slice: 0 : numsToShow"  >
+          <div class="card mb-3 upComing" >
+            <mat-list > 
+                <mat-list-item> 
+                  <a matLine href="{{event.uri}}" target ="_blank">{{event.displayName}}</a>
+                  <p matLine>Artist: {{event.artist}} {{event.time | date: 'MMM dd, yyyy HH:mm:ss'}}</p>
+                  <p matLine>Type: {{event.type}}</p>
+                </mat-list-item>
+              </mat-list>
+          </div>
+        </div>
+        </div>
+      </div>
+      <div class="container mt-5" *ngIf="upComingEvent?.length == 0">
+        <div class=" row alert alert-warning"  role="alert">
+          No records.
+        </div>
+    </div>
+      <div class="row justify-content-center">
+          <div class="col-auto ">
+        <Button *ngIf="isHidden && (upComingEvent!= null && upComingEvent.length != 0)" class="btn btn-primary btn-lg" (click)="showMore()" >Show More</Button>
+        <Button *ngIf="!isHidden" class="btn btn-primary btn-lg" (click) = "showLess()">Show Less </Button>
+      </div>
+      </div>
+     
+  </div>
+</div>
+
+
+ 
+ 
+ 
+ 
+
+
+

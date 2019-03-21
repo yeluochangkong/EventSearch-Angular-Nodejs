@@ -1,0 +1,99 @@
+    
+<div class="container parent" *ngIf = "isParentDisplay"  >
+  
+  <div id ="Results" *ngIf="isEventDisplay" [@switch]>
+    <div  *ngIf="events">
+        <div class="row ">
+            <div class="col">
+                <button class="btn btn-outline-secondary float-right" [disabled]="isdetailBtn()"  (click)= "backToDetail()" > Detali ></button>
+            </div>  
+      </div>
+       
+      <div class="table-responsive-md"  >
+        <table  class="table table-sm mytable table-hover " >
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Date</th>
+              <th scope="col">Event</th>
+              <th scope="col">Category</th>
+              <th scope="col">VenueInfo</th>
+              <th scope="col">Favorites</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let element of events; let i = index; "  (mouseenter)="removeHighlight($event)" (mouseleave)="backHighlight($event, element.id)"[ngStyle]="{background: eventDetail?.eventId == element.id? 'rgb(249,224,167)':'' }">
+              <th scope="row">{{i + 1}}</th>
+              <td><div style="width:100px"> {{element.date}}</div></td>
+              <td> <div style="width:280px"><button class="linkBtn" formContorlName="eventDetailButton" value ="{{element.fav}}" (click)="getEventDetail($event)" matTooltip="{{element.eventName }}"> {{element.eventName | subName}} </button> </div></td>
+              <td><div style="width:150px;">{{element.category}}</div></td>
+              <td><div style="width:200px;">{{element.venueInfo}}</div></td>
+              <td> <button  class="btn btn-light btn-sm mybtn"(click)="putToStorange(element.fav)"  value="{{element.fav}}"><i *ngIf="element?.isInStorage == false" class="material-icons ">  
+                  star_border
+                </i><i *ngIf="element?.isInStorage"class="material-icons  star">star</i></button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+       </div>
+  </div>
+       
+  <!-- [@isDisplay]="isFavDisplay? 'display':'hide'" -->
+      
+    <div id="favorities" *ngIf="isFavDisplay " >
+    <div  *ngIf="favorities != null && favorities.length != 0 " > 
+        <div class="row ">
+            <div class="col">
+                <button *ngIf= "favorities" class="btn btn-outline-secondary float-right" [disabled]="isdetailBtn()"  (click)= "backToDetail()" > Detali ></button>
+            </div> 
+           
+      </div>
+      <div class="table-responsive">
+        <table class="table table-sm mytable " style="max-width:1500px">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Date</th>
+              <th scope="col">Event</th>
+              <th scope="col">Category</th>
+              <th scope="col">VenueInfo</th>
+              <th scope="col">Favorites</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let element of favorities; let i = index" (mouseenter)="removeHighlight($event)" (mouseleave)="backHighlight($event, element.id)"[ngStyle]="{background: eventDetail?.eventId == element.id? 'rgb(249,224,167)':'' }">
+              <th scope="row">{{i + 1}}</th>
+              <td><div style="width:100px">{{element.date}}</div></td>
+              <td ><div style="width:280px"><button class="linkBtn" formContorlName="favDetailButton" value ="{{element.fav}}" (click)="getEventDetail($event)" matTooltip="{{element.eventName }}"> {{element.eventName | subName}} </button></div></td>
+              <td><div style="width:150px">{{element.category}}</div></td>
+              <td><div style="width:200px">{{element.venueInfo}}</div></td>
+              <td><button btn btn-light btn-sm mybtn (click)="deleteFav(element.fav)" value="{{element.fav}}"> <i class="material-icons">
+                delete
+                </i></button></td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+      <div class="container mt-5" *ngIf="(favorities == null || favorities.length == 0)">
+        <div class=" row alert alert-warning"  role="alert">
+          No records.
+        </div>
+    </div>
+      
+</div>
+
+</div>
+
+<!-- error Handle -->
+
+        
+
+   <app-detail-tabs *ngIf="eventDetail != null && isDetailDisplay"  [currentEvent]="currentEvent" [eventDetail] = "eventDetail" [artists] = "artists" [photo] = "photo" [venue]="venue" [upComingEvent]="upComingEvent" [copyEvent]="copyEvent"     ></app-detail-tabs>
+   <div class="container mt-5 pt-5">
+    <div class="progress" *ngIf="isBarDisplay">
+            <div class="progress-bar progress-bar-striped" [style.width.%] ="timer"  role="progressbar" aria-valuenow ="timer" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+   </div>
+<!-- [@isDisplay]="isParentDisplay? 'hide':'display'" -->
+<!-- (put)="childPutToFavCall($event)" -->
